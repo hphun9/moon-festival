@@ -1,0 +1,137 @@
+:root {
+    --bg: #050816;
+    --orange: #ff9c4d;
+    --orange2: #ffb97a;
+    --glow: #ffd9a8;
+    --moon: #fefefe;
+    --text: #e8edf7;
+    --accent: #ffd28a;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(1200px 800px at 60% 15%, #0c122d 0%, var(--bg) 60%);
+    color: var(--text);
+    font-family: "Quicksand", ui-sans-serif, system-ui;
+    overflow: hidden;
+}
+
+#stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+.moon {
+    position: fixed;
+    right: min(6vw, 72px);
+    top: min(6vh, 72px);
+    width: clamp(120px, 18vw, 260px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    z-index: 1;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #f6f9ff 45%, #dce6ff 70%, #bfcfff00 100%);
+    box-shadow: 0 0 70px 30px #fff3, 0 0 180px 90px #fff2;
+}
+
+.lantern-field {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.lantern {
+    position: absolute;
+    bottom: -120px;
+    width: clamp(24px, 3vw, 52px);
+    aspect-ratio: 3/4;
+    filter: drop-shadow(0 0 8px #ffc888cc);
+    animation: floatUp linear infinite;
+    will-change: transform, opacity;
+}
+
+.lantern::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: center/contain no-repeat url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'>\
+    <defs>\
+      <radialGradient id='g' cx='50%' cy='55%' r='60%'>\
+        <stop offset='0%' stop-color='%23fff2cc'/>\
+        <stop offset='40%' stop-color='%23ffb457'/>\
+        <stop offset='100%' stop-color='%23e07b1f'/>\
+      </radialGradient>\
+      <filter id='blur'><feGaussianBlur stdDeviation='0.8'/></filter>\
+    </defs>\
+    <path d='M10,40 C10,16 32,6 50,6 s40,10 40,34 v40 c0,26 -18,44 -40,44 s-40,-18 -40,-44z' fill='url(%23g)' stroke='%23ffb46b' stroke-width='2'/>\
+    <rect x='38' y='112' width='24' height='8' rx='2' fill='%23a34d17'/>\
+    <g filter='url(%23blur)' opacity='0.9'>\
+      <circle cx='50' cy='90' r='10' fill='%23ffdca0'/>\
+    </g>\
+  </svg>");
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translate(calc(var(--x, 0px)), 0px) scale(var(--s, 1));
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(calc(var(--drift, 0px)), -110vh) scale(var(--s, 1));
+        opacity: 0;
+    }
+}
+
+.message {
+    position: fixed;
+    left: 50%;
+    bottom: 10vh;
+    transform: translateX(-50%);
+    z-index: 3;
+    max-width: min(90vw, 880px);
+    padding: 20px 26px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    background: linear-gradient(145deg, #101733cc, #0a0f24cc);
+    border: 1px solid #ffffff20;
+    box-shadow: 0 10px 40px #0008, 0 0 30px #ffd28a33;
+    text-align: center;
+    animation: floatMsg 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatMsg {
+    from {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+        transform: translateX(-50%) translateY(-8px);
+    }
+}
+
+.message h1 {
+    margin: 0 0 8px;
+    font-size: clamp(22px, 4vw, 42px);
+    color: var(--accent);
+}
+
+.message p {
+    margin: 0;
+    font-size: clamp(15px, 2vw, 20px);
+    line-height: 1.6;
+}
+
+.player,
+.release,
+.hint,
+.credit {
+    z-index: 4;
+}
