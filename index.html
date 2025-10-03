@@ -1,38 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Trung Thu Cho Bé Nguyên ✨</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trung Thu Cho Bé Nguyên ✨</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <canvas id="stars" aria-hidden="true"></canvas>
-    <div class="moon" aria-hidden="true"></div>
-    <div class="lantern-field" id="field" aria-hidden="true"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <canvas id="meteors" aria-hidden="true"></canvas>
 
-    <section class="message" id="msg">
-        <h1>Trung Thu này, tớ có vài điều muốn nói…</h1>
-        <p id="type"></p>
-    </section>
+  <div class="moon" aria-hidden="true"></div>
 
-    <div class="player">
-        <button class="play-btn" id="play" aria-label="Phát nhạc">
-            <svg viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-            </svg>
-        </button>
-    </div>
-    <button class="release" id="release">Thả thêm đèn lồng 🎐</button>
-    <div class="credit">Made with ❤ for Bé Nguyên</div>
-    <div class="hint">Nhấn ▶ để bật nhạc</div>
+  <div class="lantern-field" id="field" aria-hidden="true"></div>
 
-    <audio id="bgm" preload="auto" loop>
-        <source src="music.mp3" type="audio/mpeg" />
-    </audio>
-    <script src="script.js"></script>
+  <section class="message" id="msg">
+    <h1>Trung Thu này, tớ có vài điều muốn nói…</h1>
+    <p id="type"></p>
+  </section>
+
+  <div class="credit">Made with ❤ for Bé Nguyên</div>
+  <script src="script.js"></script>
 </body>
-
 </html>

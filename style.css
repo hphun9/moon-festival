@@ -1,137 +1,186 @@
-:root {
-    --bg: #050816;
-    --orange: #ff9c4d;
-    --orange2: #ffb97a;
-    --glow: #ffd9a8;
-    --moon: #fefefe;
-    --text: #e8edf7;
-    --accent: #ffd28a;
+:root{
+  --bg:#050816;
+  --text:#e8edf7;
+  --accent:#ffd28a;
 }
 
-body {
-    margin: 0;
-    height: 100%;
-    background: radial-gradient(1200px 800px at 60% 15%, #0c122d 0%, var(--bg) 60%);
-    color: var(--text);
-    font-family: "Quicksand", ui-sans-serif, system-ui;
-    overflow: hidden;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100dvh;
+  background-color:var(--bg);
+  background-image:radial-gradient(1200px 800px at 60% 15%, #0c122d 0%, #050816 60%);
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:"Quicksand",ui-sans-serif,system-ui;
+  overflow:hidden;
 }
 
-#stars {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
+/* canvases */
+#stars,#meteors{position:fixed; inset:0}
+#stars{z-index:0}
+#meteors{z-index:1; pointer-events:none}
+
+/* moon (mềm) */
+.moon{
+  position:fixed;
+  right:min(6vw,72px);
+  top:min(6vh,72px);
+  width:clamp(120px,18vw,260px);
+  aspect-ratio:1/1;
+  border-radius:50%;
+  z-index:2;
+  background:radial-gradient(circle at 30% 30%, #fff 0%, #f6f9ff 45%, #dce6ff 70%, transparent 100%);
+  box-shadow:0 0 70px 30px #fff3, 0 0 180px 90px #fff2;
 }
 
-.moon {
-    position: fixed;
-    right: min(6vw, 72px);
-    top: min(6vh, 72px);
-    width: clamp(120px, 18vw, 260px);
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    z-index: 1;
-    background: radial-gradient(circle at 30% 30%, #fff 0%, #f6f9ff 45%, #dce6ff 70%, #bfcfff00 100%);
-    box-shadow: 0 0 70px 30px #fff3, 0 0 180px 90px #fff2;
+/* ===== Lanterns with stronger 3D cues ===== */
+.lantern-field{
+  position:fixed;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  perspective:1000px;
 }
 
-.lantern-field {
-    position: fixed;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
+.lantern{
+  position:absolute;
+  bottom:-240px;
+  width:62px;
+  aspect-ratio:3/4;
+  transform-style:preserve-3d;
+  animation:float linear infinite, sway 7.6s ease-in-out infinite, flicker 2.4s ease-in-out infinite;
+  will-change:transform,opacity,filter;
+  filter:drop-shadow(0 6px 10px #0006) drop-shadow(0 0 16px #ffb347cc) drop-shadow(0 0 34px #ff944d88);
+  opacity:var(--opa,.9);
 }
 
-.lantern {
-    position: absolute;
-    bottom: -120px;
-    width: clamp(24px, 3vw, 52px);
-    aspect-ratio: 3/4;
-    filter: drop-shadow(0 0 8px #ffc888cc);
-    animation: floatUp linear infinite;
-    will-change: transform, opacity;
-}
-
-.lantern::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: center/contain no-repeat url("data:image/svg+xml;utf8,\
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'>\
+/* BODY (SVG with facets, rim, inner core) */
+.lantern::before{
+  content:"";
+  position:absolute; inset:0;
+  transform:translateZ(1.2px) rotateY(var(--tiltY,0deg)) rotateX(var(--tiltX,0deg));
+  background:center/contain no-repeat url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 180'>\
     <defs>\
-      <radialGradient id='g' cx='50%' cy='55%' r='60%'>\
-        <stop offset='0%' stop-color='%23fff2cc'/>\
-        <stop offset='40%' stop-color='%23ffb457'/>\
-        <stop offset='100%' stop-color='%23e07b1f'/>\
+      <linearGradient id='facetL' x1='0' y1='0' x2='1' y2='0'>\
+        <stop offset='0%' stop-color='%23d96522'/>\
+        <stop offset='100%' stop-color='%23ff8c3e'/>\
+      </linearGradient>\
+      <linearGradient id='facetR' x1='0' y1='0' x2='1' y2='0'>\
+        <stop offset='0%' stop-color='%23ffa35a'/>\
+        <stop offset='100%' stop-color='%23ffba74'/>\
+      </linearGradient>\
+      <radialGradient id='core' cx='50%' cy='66%' r='32%'>\
+        <stop offset='0%' stop-color='%23fff9de'/>\
+        <stop offset='100%' stop-color='transparent'/>\
       </radialGradient>\
-      <filter id='blur'><feGaussianBlur stdDeviation='0.8'/></filter>\
+      <radialGradient id='rim' cx='50%' cy='80%' r='52%'>\
+        <stop offset='0%' stop-color='%23ffefb4'/>\
+        <stop offset='100%' stop-color='transparent'/>\
+      </radialGradient>\
+      <linearGradient id='tail' x1='0' y1='0' x2='0' y2='1'>\
+        <stop offset='0%' stop-color='%23ffd37acc'/>\
+        <stop offset='100%' stop-color='transparent'/>\
+      </linearGradient>\
     </defs>\
-    <path d='M10,40 C10,16 32,6 50,6 s40,10 40,34 v40 c0,26 -18,44 -40,44 s-40,-18 -40,-44z' fill='url(%23g)' stroke='%23ffb46b' stroke-width='2'/>\
-    <rect x='38' y='112' width='24' height='8' rx='2' fill='%23a34d17'/>\
-    <g filter='url(%23blur)' opacity='0.9'>\
-      <circle cx='50' cy='90' r='10' fill='%23ffdca0'/>\
-    </g>\
+    <!-- silhouette -->\
+    <path d='M60 6 L95 26 Q108 32 108 44 L108 106 Q108 148 60 172 Q12 148 12 106 L12 44 Q12 32 25 26 Z' fill='%23ff983f' opacity='.001'/>\
+    <!-- left facet -->\
+    <path d='M60 6 L28 23 Q18 28 18 42 L18 106 Q18 142 60 164 L60 6 Z' fill='url(%23facetL)' stroke='%23c55b20' stroke-width='2'/>\
+    <!-- right facet -->\
+    <path d='M60 6 L92 23 Q102 28 102 42 L102 106 Q102 142 60 164 L60 6 Z' fill='url(%23facetR)' stroke='%23c55b20' stroke-width='2'/>\
+    <!-- folds -->\
+    <path d='M41 16 L41 138' stroke='%23de7228' stroke-opacity='.55' stroke-width='1.6'/>\
+    <path d='M79 16 L79 138' stroke='%23de7228' stroke-opacity='.55' stroke-width='1.6'/>\
+    <path d='M60 6 L60 164' stroke='%23e57b2c' stroke-opacity='.65' stroke-width='2'/>\
+    <!-- top cap -->\
+    <path d='M28 23 L92 23 Q102 28 102 34 L18 34 Q18 28 28 23 Z' fill='%23b5521c' fill-opacity='.45'/>\
+    <!-- inner core glow -->\
+    <circle cx='60' cy='112' r='26' fill='url(%23core)'/>\
+    <!-- bottom rim (thick) -->\
+    <ellipse cx='60' cy='140' rx='26' ry='10' fill='%23a14213' opacity='.9'/>\
+    <ellipse cx='60' cy='140' rx='22' ry='8' fill='url(%23rim)' opacity='.9'/>\
+    <!-- wooden bar -->\
+    <rect x='43' y='142' width='34' height='12' rx='2' fill='%239a4315'/>\
+    <!-- tail glow -->\
+    <rect x='57' y='154' width='6' height='90' fill='url(%23tail)'/>\
   </svg>");
 }
 
-@keyframes floatUp {
-    0% {
-        transform: translate(calc(var(--x, 0px)), 0px) scale(var(--s, 1));
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translate(calc(var(--drift, 0px)), -110vh) scale(var(--s, 1));
-        opacity: 0;
-    }
+/* ground halo below (soft oval) */
+.lantern::after{
+  content:"";
+  position:absolute;
+  left:50%; bottom:-8%;
+  width:60%; height:18%;
+  transform:translateX(-50%) translateZ(0);
+  background:radial-gradient(ellipse at 50% 50%, rgba(255,221,143,.55), rgba(255,221,143,0) 70%);
+  filter:blur(4px);
+  opacity:.7;
 }
 
-.message {
-    position: fixed;
-    left: 50%;
-    bottom: 10vh;
-    transform: translateX(-50%);
-    z-index: 3;
-    max-width: min(90vw, 880px);
-    padding: 20px 26px;
-    border-radius: 20px;
-    backdrop-filter: blur(8px);
-    background: linear-gradient(145deg, #101733cc, #0a0f24cc);
-    border: 1px solid #ffffff20;
-    box-shadow: 0 10px 40px #0008, 0 0 30px #ffd28a33;
-    text-align: center;
-    animation: floatMsg 6s ease-in-out infinite alternate;
+/* motion */
+@keyframes float{
+  0%{
+    transform:
+      translate(calc(var(--x,0px)),0)
+      translateZ(var(--depth,0px))
+      scale(var(--scale,1))
+      rotateZ(0deg);
+    opacity:0;
+  }
+  10%{opacity:1}
+  50%{
+    transform:
+      translate(calc(var(--drift,0px)),-58vh)
+      translateZ(var(--depth,0px))
+      scale(var(--scale,1))
+      rotateZ(2deg);
+  }
+  100%{
+    transform:
+      translate(calc(var(--drift,0px)),-135vh)
+      translateZ(var(--depth,0px))
+      scale(var(--scale,1))
+      rotateZ(-1.2deg);
+    opacity:0;
+  }
+}
+@keyframes sway{
+  0%,100%{ transform-origin:50% 100% }
+  50%{   transform-origin:48% 100% }
+}
+@keyframes flicker{
+  0%,100%{ filter:brightness(1) drop-shadow(0 6px 10px #0006) drop-shadow(0 0 16px #ffb347cc) drop-shadow(0 0 34px #ff944d88) }
+  40%{    filter:brightness(1.06) drop-shadow(0 6px 12px #0007) drop-shadow(0 0 22px #ffb347dd) drop-shadow(0 0 40px #ff944d99) }
 }
 
-@keyframes floatMsg {
-    from {
-        transform: translateX(-50%) translateY(0);
-    }
+/* depth presets */
+.lantern.near{ --scale:1.22; --opa:.96; --depth:70px;  --tiltY:-8deg; --tiltX:4deg }
+.lantern.mid { --scale:.96;  --opa:.86; --depth:24px;  --tiltY:-5deg; --tiltX:3deg }
+.lantern.far { --scale:.72;  --opa:.72; --depth:-40px; --tiltY:-3deg; --tiltX:2deg; filter:blur(.5px) drop-shadow(0 0 10px #ff9a3dcc) }
 
-    to {
-        transform: translateX(-50%) translateY(-8px);
-    }
+/* Message */
+.message{
+  position:fixed;
+  left:50%;
+  bottom:10vh;
+  transform:translateX(-50%);
+  z-index:4;
+  max-width:min(90vw,880px);
+  padding:20px 26px;
+  border-radius:20px;
+  backdrop-filter:blur(8px);
+  background:linear-gradient(145deg,#101733cc,#0a0f24cc);
+  border:1px solid #ffffff20;
+  box-shadow:0 10px 40px #0008, 0 0 30px #ffd28a33;
+  text-align:center;
+  animation:floatMsg 6s ease-in-out infinite alternate;
 }
+@keyframes floatMsg{ from{transform:translateX(-50%) translateY(0)} to{transform:translateX(-50%) translateY(-8px)} }
+.message h1{ margin:0 0 8px; font-size:clamp(22px,4vw,42px); color:var(--accent) }
+.message p{ margin:0; font-size:clamp(15px,2vw,20px); line-height:1.6 }
 
-.message h1 {
-    margin: 0 0 8px;
-    font-size: clamp(22px, 4vw, 42px);
-    color: var(--accent);
-}
-
-.message p {
-    margin: 0;
-    font-size: clamp(15px, 2vw, 20px);
-    line-height: 1.6;
-}
-
-.player,
-.release,
-.hint,
-.credit {
-    z-index: 4;
-}
+.credit{ position:fixed; top:12px; left:12px; font-size:12px; opacity:.7; z-index:5 }
