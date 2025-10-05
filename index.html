@@ -1,25 +1,298 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Trung Thu Cho Bé Nguyên ✨</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- <meta name="robots" content="index, follow"> -->
+    <title>Trung Thu Cho Bé Nguyên ✨</title>
+    <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: "Mali", cursive;
+            background: linear-gradient(to top, rgb(6, 0, 20), #00020a);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            display: block;
+            pointer-events: none;
+        }
+
+        .moon {
+            position: fixed;
+            top: 50px;
+            right: 80px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #fff, #ddd 70%);
+            border-radius: 50%;
+            box-shadow:
+                0 0 30px rgba(255, 255, 200, 0.8),
+                0 0 60px rgba(255, 255, 180, 0.6),
+                0 0 90px rgba(255, 255, 150, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .moon {
+                top: 20px;
+                right: 20px;
+                width: 70px;
+                height: 70px;
+                box-shadow:
+                    0 0 15px rgba(255, 255, 200, 0.8),
+                    0 0 30px rgba(255, 255, 180, 0.6),
+                    0 0 50px rgba(255, 255, 150, 0.4);
+            }
+        }
+
+        #lantern-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .lantern {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            opacity: 0.9;
+            user-select: none;
+            will-change: transform, opacity;
+            filter: drop-shadow(0 0 6px rgba(255, 150, 50, 0.7));
+            cursor: pointer;
+        }
+
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            display: flex;
+            color: #d97706;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+            width: 80%;
+            padding: 0 16px;
+            pointer-events: none;
+        }
+
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            margin: 0 6px;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .word.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .word.hide {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        #invite-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ffffff, #fff8e6);
+            color: #0b1a2a;
+            font-family: "Mali", cursive;
+            padding: 28px 34px;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(255, 220, 140, 0.35);
+            text-align: center;
+            z-index: 10001;
+            min-width: min(520px, 86vw);
+        }
+
+        #invite-box p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #d97706;
+            text-shadow: 0 0 6px rgba(244, 255, 150, 0.6);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: nowrap;
+        }
+
+        #invite-box button {
+            border: none;
+            outline: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: "Mali", cursive;
+            font-weight: 700;
+        }
+
+        #btn-ok {
+            background: linear-gradient(135deg, #47ffb2, #096332);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 112, 79, 0.6);
+        }
+
+        #btn-ok:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(16, 112, 79, 0.8);
+        }
+
+        #btn-no {
+            background: linear-gradient(135deg, #ff6b6b, #ff4e50);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 100, 100, 0.6);
+        }
+
+        #btn-no:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(255, 100, 100, 0.8);
+        }
+
+        #wish-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #d97706;
+            font-family: "Mali", cursive;
+            padding: 40px 25px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: none;
+            z-index: 10000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        #skywatchers {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            max-width: 90%;
+            opacity: 0.8;
+            pointer-events: none;
+            user-select: none;
+            z-index: 9999;
+        }
+
+        #hint {
+            position: fixed;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff6b2;
+            text-shadow: 0 0 10px rgba(255, 255, 200, 0.9);
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 1s ease;
+            white-space: pre-line;
+            text-align: center;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-5px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+
 </head>
+
 <body>
-  <canvas id="stars" aria-hidden="true"></canvas>
-  <canvas id="meteors" aria-hidden="true"></canvas>
+    <canvas id="starfield"></canvas>
+    <div class="moon"></div>
+    <div id="message"></div>
+    <div id="lantern-container"></div>
+    <div id="invite-box">
+        <p>Đi chơi với anh nhé?</p>
+        <div class="btn-group">
+            <button id="btn-ok">Ok</button>
+            <button id="btn-no">Không</button>
+        </div>
+    </div>
+    <div id="wish-popup"></div>
+    <img src="as.png" alt="Couple watching sky" id="skywatchers">
 
-  <div class="moon" aria-hidden="true"></div>
+    <audio id="bg-music" loop>
+        <source src="a.mp3" type="audio/mp3">
+    </audio>
+    <script>
+        const bgMusic = document.getElementById("bg-music");
+        let musicStarted = false;
 
-  <div class="lantern-field" id="field" aria-hidden="true"></div>
+        document.addEventListener("click", () => {
+            if (!musicStarted) {
+                bgMusic.play().catch((err) => {
+                    console.log("Không phát được nhạc: ", err);
+                });
+                musicStarted = true;
+            }
+        });
 
-  <section class="message" id="msg">
-    <h1>Trung Thu này, anh có vài điều muốn nói…</h1>
-    <p id="type"></p>
-  </section>
-
-  <div class="credit">Made with ❤ for Bé Nguyên</div>
-  <script src="script.js"></script>
+    </script>
+    <!-- <script>
+        // function _0x2d8d() { const n = ["src", "793998hWKEWI", "11770GFCudu", "shiftKey", "addEventListener", "preventDefault", "appendChild", "head", "reload", "script", "createElement", "keydown", "none", "display", "body", "252224GFxSCr", "12748dfQVnW", "async", "177gCVcBH", "dev", "style", "6312690zKkraZ", "contextmenu", "ctrlKey", "72lySKYC", "1197077DViwGa", "492135LXBxzu", "innerHTML", "60IVbpFU", "now", "getTime", '\n                    <h1 style="color:red; font-size: 28px; text-align: center; margin-top: 100px;"> 🚨 Đang mở DevTools!</h1>\n                    <h1 style="color:red; font-size: 24px; text-align: center;">Nhấn F12 để đóng.</h1>', 'body {\n            font-family: \'Segoe UI\', sans-serif;\n            background: linear-gradient(to top, rgb(6, 0, 20), #00020a);\n            margin: 0;\n            padding: 0;\n            color: #fff;\n            min-height: 100vh;\n            overflow: hidden;\n            position: relative;\n        }\n\n        #starfield {\n            position: fixed;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            z-index: -2;\n            display: block;\n            pointer-events: none;\n        }\n\n        .moon {\n            position: fixed;\n            top: 50px;\n            right: 80px;\n            width: 120px;\n            height: 120px;\n            background: radial-gradient(circle at 30% 30%, #fff, #ddd 70%);\n            border-radius: 50%;\n            box-shadow:\n                0 0 30px rgba(255, 255, 200, 0.8),\n                0 0 60px rgba(255, 255, 180, 0.6),\n                0 0 90px rgba(255, 255, 150, 0.4);\n            z-index: 0;\n            pointer-events: none;\n        }\n\n        @media (max-width: 600px) {\n            .moon {\n                top: 20px;\n                right: 20px;\n                width: 70px;\n                height: 70px;\n                box-shadow:\n                    0 0 15px rgba(255, 255, 200, 0.8),\n                    0 0 30px rgba(255, 255, 180, 0.6),\n                    0 0 50px rgba(255, 255, 150, 0.4);\n            }\n        }\n\n        #lantern-container {\n            position: fixed;\n            inset: 0;\n            width: 100%;\n            height: 100%;\n            pointer-events: none;\n            z-index: 1;\n        }\n\n        .lantern {\n            position: absolute;\n            bottom: 0;\n            width: 40px;\n            opacity: 0.9;\n            user-select: none;\n            will-change: transform, opacity;\n            filter: drop-shadow(0 0 6px rgba(255, 150, 50, 0.7));\n            cursor: pointer;\n        }\n\n        #message {\n            position: fixed;\n            top: 50%;\n            left: 50%;\n            transform: translate(-50%, -50%);\n            z-index: 9999;\n            font-size: 2rem;\n            font-weight: 600;\n            line-height: 1.3;\n            display: flex;\n            color: #d97706;\n            font-family: "Mali", cursive;\n            justify-content: center;\n            align-items: center;\n            flex-wrap: wrap;\n            text-align: center;\n            width: 80%;\n            padding: 0 16px;\n            pointer-events: none;\n        }\n\n        .word {\n            display: inline-block;\n            opacity: 0;\n            transform: translateY(20px);\n            margin: 0 6px;\n            transition: opacity 0.6s ease-out, transform 0.6s ease-out;\n        }\n\n        .word.show {\n            opacity: 1;\n            transform: translateY(0);\n        }\n\n        .word.hide {\n            opacity: 0;\n            transform: translateY(-20px);\n        }\n\n        #invite-box {\n            display: none;\n            position: fixed;\n            top: 50%;\n            left: 50%;\n            transform: translate(-50%, -50%);\n            background: linear-gradient(135deg, #ffffff, #ffffff);\n            font-family: "Mali", cursive;\n            padding: 30px 40px;\n            border-radius: 8px;\n            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);\n            text-align: center;\n            z-index: 10001;\n            animation: popupScale 0.5s ease;\n        }\n\n        @keyframes popupScale {\n            from {\n                transform: translate(-50%, -50%) scale(0.6);\n                opacity: 0;\n            }\n\n            to {\n                transform: translate(-50%, -50%) scale(1);\n                opacity: 1;\n            }\n        }\n\n        #invite-box p {\n            font-size: 1.8rem;\n            font-weight: bold;\n            margin-bottom: 20px;\n            color: #d97706;\n            text-shadow: 0 0 6px rgba(244, 255, 150, 0.6);\n        }\n\n        #invite-box button {\n            border: none;\n            outline: none;\n            padding: 10px 20px;\n            margin: 20px 0;\n            border-radius: 12px;\n            font-size: 1rem;\n            cursor: pointer;\n            transition: transform 0.2s, box-shadow 0.2s;\n            font-family: "Mali", cursive;\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: center;\n            gap: 12px;\n            flex-wrap: nowrap;\n        }\n\n        #btn-ok {\n            background: linear-gradient(135deg, #47ffb2, #096332);\n            color: #fff;\n            font-weight: bold;\n            box-shadow: 0 4px 12px rgba(255, 180, 70, 0.6);\n        }\n\n        #btn-ok:hover {\n            transform: scale(1.1);\n            box-shadow: 0 6px 18px rgba(255, 180, 70, 0.8);\n        }\n\n        #btn-no {\n            background: linear-gradient(135deg, #ff6b6b, #ff4e50);\n            color: #fff;\n            font-weight: bold;\n            box-shadow: 0 4px 12px rgba(255, 100, 100, 0.6);\n        }\n\n        #btn-no:hover {\n            transform: scale(1.1);\n            box-shadow: 0 6px 18px rgba(255, 100, 100, 0.8);\n        }\n\n        @media (max-width: 600px) {\n            #invite-box {\n                width: 60vw;\n                font-size: 1.2rem;\n            }\n\n            #invite-box button {\n                padding: 10px 12px;\n                font-size: 1rem;\n            }\n        }\n\n        #wish-popup {\n            position: fixed;\n            top: 50%;\n            left: 50%;\n            transform: translate(-50%, -50%);\n            background: rgba(255, 255, 255, 0.9);\n            color: #d97706;\n            font-family: "Mali", cursive;\n            padding: 40px 25px;\n            border-radius: 12px;\n            font-size: 1.5rem;\n            font-weight: bold;\n            display: none;\n            z-index: 10000;\n            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);\n            text-align: center;\n        }\n\n        @media (max-width: 600px) {\n            #wish-popup {\n                padding: 20px 15px;\n            }\n\n            #message {\n                font-size: 1.6rem;\n                padding: 0 12px;\n            }\n        }\n\n        #hint {\n            position: fixed;\n            top: 70%;\n            left: 50%;\n            transform: translate(-50%, -50%);\n            font-size: 1.5rem;\n            font-weight: bold;\n            color: #fff6b2;\n            text-shadow: 0 0 10px rgba(255, 255, 200, 0.9);\n            z-index: 10001;\n            opacity: 0;\n            transition: opacity 1s ease;\n            white-space: pre-line;\n            text-align: center;\n        }\n\n        @media (max-width: 600px) {\n            #hint {\n                font-size: 1rem;\n            }\n        }\n\n        @keyframes shake {\n            0% {\n                transform: translateX(0);\n            }\n\n            20% {\n                transform: translateX(-5px);\n            }\n\n            40% {\n                transform: translateX(5px);\n            }\n\n            60% {\n                transform: translateX(-5px);\n            }\n\n            80% {\n                transform: translateX(5px);\n            }\n\n            100% {\n                transform: translateX(0);\n            }\n        }\n\n        .shake {\n            animation: shake 0.5s;\n        }\n\n        #skywatchers {\n            position: fixed;\n            bottom: 0;\n            left: 50%;\n            transform: translateX(-50%);\n            width: 300px;\n            max-width: 90%;\n            z-index: 1;\n            opacity: 0.8;\n            pointer-events: none;\n            user-select: none;\n            z-index: 9999999;\n        }', "key"]; return (_0x2d8d = function () { return n })() } function _0x45a8(n, t) { const e = _0x2d8d(); return (_0x45a8 = function (n, t) { return e[n -= 226] })(n, t) } const _0x390108 = _0x45a8; !function (n, t) { const e = _0x45a8, o = _0x2d8d(); for (; ;)try { if (882492 === parseInt(e(246)) / 1 + parseInt(e(236)) / 2 + parseInt(e(239)) / 3 * (-parseInt(e(237)) / 4) + -parseInt(e(249)) / 5 * (parseInt(e(256)) / 6) + -parseInt(e(247)) / 7 * (-parseInt(e(245)) / 8) + parseInt(e(242)) / 9 + parseInt(e(257)) / 10) break; o.push(o.shift()) } catch (n) { o.push(o.shift()) } }(); const style = document[_0x390108(231)](_0x390108(241)); style[_0x390108(248)] = _0x390108(253), document[_0x390108(228)][_0x390108(227)](style), document[_0x390108(259)](_0x390108(232), (function (n) { const t = _0x390108; ("F12" === n.key || n[t(244)] && n[t(258)] && ("I" === n[t(254)] || "J" === n.key) || n[t(244)] && "U" === n[t(254)]) && n[t(226)]() })), document[_0x390108(259)](_0x390108(243), (function (n) { n[_0x390108(226)]() })); let devx = !1; setInterval((() => { const _0x3d3182 = _0x390108, _0xbe032e = (new Date)[_0x3d3182(251)](); eval("debugger;"); const _0x5ecd92 = (new Date)[_0x3d3182(251)](), _0x1f255f = _0x5ecd92 - _0xbe032e > 100; _0x1f255f && !devx && (devx = !0, document[_0x3d3182(235)][_0x3d3182(248)] = _0x3d3182(252)), !_0x1f255f && devx && location[_0x3d3182(229)]() }), 1e3); const dev = document[_0x390108(231)](_0x390108(240)); dev.id = "panbap.github.io", dev[_0x390108(241)][_0x390108(234)] = _0x390108(233), document.body[_0x390108(227)](dev); const script = document[_0x390108(231)](_0x390108(230)); script[_0x390108(255)] = "./script.js?v=" + Date[_0x390108(250)](), script[_0x390108(238)] = !1, document.head[_0x390108(227)](script);
+    </script> -->
+    <script src="./script.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lovely – nơi chia sẻ yêu thương." />
+    <!-- <meta name="robots" content="index, follow"> -->
+    <title>Hướng dẫn tải file</title>
+    <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: "Mali", cursive;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #041730;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin: 20px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #218838;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .steps ol {
+            padding-left: 20px;
+        }
+
+        .steps li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="center">
+            <h1>Hướng dẫn tải và chỉnh sửa file</h1>
+
+            <!-- Nút tải file -->
+            <a href="https://drive.google.com/file/d/1PHwzkEQy4PgrxzNLec_JxsZN1r8UaRBy/view?usp=sharing" class="download-button" download>
+                📥 Download file
+            </a>
+        </div>
+
+        <!-- Các bước hướng dẫn -->
+        <div class="steps">
+            <h2>Các bước thực hiện:</h2>
+            <ol>
+                <li>Nhấn vào nút <strong>"Tải file"</strong> ở trên để bắt đầu tải.</li>
+                <li>Sau khi tải xong, kiểm tra thư mục <strong>"Tải xuống"</strong> trên máy tính của bạn.</li>
+                <li>Giải nén file nếu nó ở dạng <code>.zip</code> pass giải nén: <strong>trungthu</strong></li>
+                <li>Mở file <code>.html</code> bằng trình soạn thảo như Notepad, VS Code hoặc Sublime Text.</li>
+                <li>
+                    Tìm đến dòng <strong>183</strong> và thay đổi file nhạc:
+                    <br>
+                    <code>src="music.mp3"</code> &nbsp;➡️ &nbsp;thay bằng đường dẫn nhạc của bạn
+                </li>
+                <li>
+                    Tìm đến dòng <strong>257</strong> để chỉnh lời chúc:
+                    <br>
+                    <code>const wishes = [ ... ]</code> &nbsp;➡️ &nbsp;chỉnh sửa nội dung lời chúc trong mảng
+                </li>
+                <li>
+                    Tìm đến dòng <strong>269</strong> để thay ảnh đèn lồng:
+                    <br>
+                    <code>lantern.src = "img/lantern.png"</code> &nbsp;➡️ &nbsp;thay bằng ảnh của bạn
+                </li>
+                <li>Lưu lại file, sau đó mở trong trình duyệt để xem kết quả.</li>
+            </ol>
+        </div>
+        <div class="center">
+            <h1>Cảm ơn các bạn đã quan tâm</h1>
+
+            <!-- Nút tải file -->
+            <a href="https://panbap.github.io/Donate/donate.html" class="download-button" download>
+                Donate
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
